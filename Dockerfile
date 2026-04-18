@@ -28,6 +28,7 @@ RUN apt-get update && apt-get install -y \
     pass \
     gnupg \
     dbus-x11 \
+    gnome-keyring \
     procps \
     && rm -rf /var/lib/apt/lists/*
 

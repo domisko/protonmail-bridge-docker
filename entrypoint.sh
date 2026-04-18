@@ -10,6 +10,10 @@ if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
     export DBUS_SESSION_BUS_ADDRESS
 fi
 
+# ── Start secret service (gnome-keyring) ──────────────────────────────────────
+eval $(gnome-keyring-daemon --start --components=secrets)
+export GNOME_KEYRING_CONTROL
+
 # ── Clean up stale lock files from unclean shutdowns ──────────────────────────
 rm -f /root/.cache/protonmail/bridge-v3/bridge.lock \
       /root/.cache/protonmail/bridge-v3/bridge-gui.lock
@@ -31,10 +35,3 @@ fi
 
 # ── Interactive login mode (run once manually to authenticate) ─────────────────
 if [ "${1}" = "init" ]; then
-    echo "[bridge] Starting interactive CLI for account setup..."
-    exec /protonmail/bridge --cli
-fi
-
-# ── Normal daemon mode ─────────────────────────────────────────────────────────
-echo "[bridge] Starting Proton Mail Bridge daemon..."
-exec /protonmail/bridge --noninteractive
