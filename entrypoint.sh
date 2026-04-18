@@ -3,6 +3,17 @@ set -e
 
 export GNUPGHOME="/root/.gnupg"
 
+# ── Start DBus session (required for keychain/secret service) ─────────────────
+if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
+    echo "[bridge] Starting DBus session..."
+    eval $(dbus-launch --sh-syntax)
+    export DBUS_SESSION_BUS_ADDRESS
+fi
+
+# ── Clean up stale lock files from unclean shutdowns ──────────────────────────
+rm -f /root/.cache/protonmail/bridge-v3/bridge.lock \
+      /root/.cache/protonmail/bridge-v3/bridge-gui.lock
+
 # ── First-run: bootstrap GPG key + pass store ─────────────────────────────────
 if [ ! -d "/root/.password-store" ]; then
     echo "[bridge] First run detected — initializing credential store..."

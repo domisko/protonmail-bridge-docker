@@ -23,13 +23,11 @@ RUN make build-nogui
 FROM debian:bookworm-slim
 
 RUN apt-get update && apt-get install -y \
-    # Bridge runtime libraries
     libsecret-1-0 \
     libglib2.0-0 \
-    # Credential storage (bridge won't start without this)
     pass \
     gnupg \
-    # For debugging if needed
+    dbus-x11 \
     procps \
     && rm -rf /var/lib/apt/lists/*
 
