@@ -14,6 +14,9 @@ fi
 eval $(gnome-keyring-daemon --start --components=secrets)
 export GNOME_KEYRING_CONTROL
 
+# ── Unlock/create the default login keyring ───────────────────────────────────
+echo "" | gnome-keyring-daemon --unlock
+
 # ── Clean up stale lock files from unclean shutdowns ──────────────────────────
 rm -f /root/.cache/protonmail/bridge-v3/bridge.lock \
       /root/.cache/protonmail/bridge-v3/bridge-gui.lock
