@@ -35,3 +35,11 @@ fi
 
 # ── Interactive login mode (run once manually to authenticate) ─────────────────
 if [ "${1}" = "init" ]; then
+    echo "[bridge] Starting interactive CLI for account setup..."
+    exec /protonmail/bridge --cli
+fi
+
+# ── Normal daemon mode ─────────────────────────────────────────────────────────
+echo "[bridge] Starting Proton Mail Bridge daemon..."
+exec /protonmail/bridge --noninteractive
+EOF
